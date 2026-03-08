@@ -204,7 +204,8 @@ export const dispatchTelegramMessage = async ({
           chatId,
           maxChars: draftMaxChars,
           thread: threadSpec,
-          previewTransport: useMessagePreviewTransportForDm ? "message" : "auto",
+          previewTransport:
+            useMessagePreviewTransportForDm && laneName === "reasoning" ? "message" : "auto",
           replyToMessageId: draftReplyToMessageId,
           minInitialChars: draftMinInitialChars,
           renderText: renderDraftPreview,
