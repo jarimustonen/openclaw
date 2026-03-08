@@ -249,6 +249,16 @@ export function clearInternalHooks(): void {
 }
 
 /**
+ * Check if any internal hooks are registered for a given event key.
+ * Supports both exact keys (e.g. "message:sent") and prefix matches
+ * (e.g. "message_sent" checks for handlers on that exact key).
+ */
+export function hasInternalHooks(eventKey: string): boolean {
+  const entry = handlers.get(eventKey);
+  return entry !== undefined && entry.length > 0;
+}
+
+/**
  * Get all registered event keys (useful for debugging)
  */
 export function getRegisteredEventKeys(): string[] {

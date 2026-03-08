@@ -5,6 +5,7 @@
  * error handling, priority ordering, and async support.
  */
 
+import { hasInternalHooks } from "../hooks/internal-hooks.js";
 import { concatOptionalTextSegments } from "../shared/text/join-segments.js";
 import type { PluginRegistry } from "./registry.js";
 import type {
@@ -712,7 +713,8 @@ export function createHookRunner(registry: PluginRegistry, options: HookRunnerOp
    * Check if any hooks are registered for a given hook name.
    */
   function hasHooks(hookName: PluginHookName): boolean {
-    return registry.typedHooks.some((h) => h.hookName === hookName);
+    // Check both typed hooks (api.on()) and internal hooks (api.registerHook())
+    return registry.typedHooks.some((h) => h.hookName === hookName) || hasInternalHooks(hookName);
   }
 
   /**
